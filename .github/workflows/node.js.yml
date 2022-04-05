@@ -33,13 +33,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup SSH agent
-        uses: webfactory/ssh-agent@v0.4.0
-        with:
-          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
-      - name: Setup known_hosts
-        run: echo 'srv09.mikr.us ssh-rsa ' ${{ secrets.DEPLOY_PUB_KEY }} >> ~/.ssh/known_hosts
-      - name: Sync project files
-        run: rsync -avzr --delete ${GITHUB_WORKSPACE}/ hane@srv09.mikr.us:/cytrus/rumpeldev/
+     - name: Action - rsync API
+       uses: up9cloud/action-rsync@v1.3
+       env:
+         SOURCE: /home/runner/work/DocumentRegistry/DocumentRegistry/deploy/Api/
+         HOST: ${{ secrets.REMOTE_HOST }}
+         USER: ${{ secrets.REMOTE_USER }}
+         KEY: ${{ secrets.DEPLOY_KEY }}
+         TARGET: ${{ secrets.REMOTE_TARGET_API }}
+         PORT: ${{ secrets.REMOTE_PORT }}
