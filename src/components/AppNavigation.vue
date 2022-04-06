@@ -1,7 +1,8 @@
 <template>
   <nav class="navbar">
     <RouterLink to="/" class="router-link">Home</RouterLink>
-    <RouterLink to="/about" class="router-link">About</RouterLink>
+    <RouterLink to="/about" class="router-link">Portfolio</RouterLink>
+<!--    <RouterLink to="/contact" class="router-link">Contact</RouterLink>-->
   </nav>
 </template>
 
@@ -12,6 +13,10 @@ export default {
 </script>
 
 <style scoped lang="css">
+  .navbar{
+    margin-left: auto;
+  }
+
   .navbar>.router-link:not(:last-child){
     border-right: 1px solid black;
   }
