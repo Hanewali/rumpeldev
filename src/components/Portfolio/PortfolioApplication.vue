@@ -1,26 +1,35 @@
 <template>
   <div class="portfolio">
-    <img src="http://via.placeholder.com/150x80" alt="Placeholder">
-    <h4>AppName</h4>
-    <p>This is application description</p>
+    <img src={{AppImage}} alt="Application Image">
+    <h4>{{ AppName }}</h4>
+    <p>{{AppDescription}}</p>
   </div>
 </template>
 
-<script setup lang="ts">
-export default {
-  name: 'PortfolioApplication',
-  props: {
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component'
 
+@Options({
+  props: {
+    AppName: String,
+    AppDescription: String,
+    AppImage: String
   }
+})
+
+export default class PortfolioApplication extends Vue {
+  AppName!: string
+  AppDescription!: string
+  AppImage!: string
 }
 </script>
 
 <style scoped lang="scss">
-  .portfolio{
-    min-width: 300px;
-    display: inline-block;
-    background-color: #00000010;
-    min-width: content-box/4;
-    padding: 2rem;
-  }
+.portfolio {
+  min-width: 300px;
+  display: inline-block;
+  background-color: #00000010;
+  min-width: content-box/4;
+  padding: 2rem;
+}
 </style>
