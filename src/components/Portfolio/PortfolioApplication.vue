@@ -1,35 +1,27 @@
 <template>
   <div class="portfolio">
-    <img src={{AppImage}} alt="Application Image">
-    <h4>{{ AppName }}</h4>
-    <p>{{AppDescription}}</p>
+    <img :src="appImage" alt="Application Image">
+    <h4>{{ appName }}</h4>
+    <p>{{appDescription}}</p>
   </div>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+<script setup lang="ts">
 
-@Options({
-  props: {
-    AppName: String,
-    AppDescription: String,
-    AppImage: String
-  }
+defineProps({
+  appImage: String,
+  appName: String,
+  appDescription: String
 })
 
-export default class PortfolioApplication extends Vue {
-  AppName!: string
-  AppDescription!: string
-  AppImage!: string
-}
 </script>
 
 <style scoped lang="scss">
 .portfolio {
-  min-width: 300px;
   display: inline-block;
-  background-color: #00000010;
   min-width: content-box/4;
-  padding: 2rem;
+  padding: 4rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
 }
 </style>
