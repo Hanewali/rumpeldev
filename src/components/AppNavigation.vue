@@ -1,8 +1,8 @@
 <template>
   <nav class="navbar">
     <RouterLink to="/" class="router-link">Home</RouterLink>
+    <RouterLink to="/blog" class="router-link">Blog</RouterLink>
     <RouterLink to="/portfolio" class="router-link">Portfolio</RouterLink>
-    <!--    <RouterLink to="/contact" class="router-link">Contact</RouterLink>-->
   </nav>
 </template>
 
