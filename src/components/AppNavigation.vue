@@ -26,10 +26,12 @@ export default {
     &:not(:last-child){
       border-right: 1px solid #2c3e5060;
     }
+    &:not(:last-child):hover{
+      border-right: 1px solid #00000000;
+    }
     &:hover {
       background-color: #2c3e5060;
       color: #FFFFFFBB;
-      border-right: 0;
     }
   }
 }
