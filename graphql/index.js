@@ -20,8 +20,8 @@ const typeDefs = gql`
     }
     
     type Query {
-        posts(limit: Int!): [Post]
-        portfolioApplications: [PortfolioApplication]
+        posts(first: Int, limit: Int!): [Post]
+        portfolioApplications(first: Int, limit: Int!): [PortfolioApplication]
         post(id: ID!): Post
     }
 `;
@@ -54,6 +54,8 @@ const resolvers = {
         posts: (parent, args, context, info) =>
             new Promise((resolve, reject) =>
                 Post.find()
+                    .skip(args.first ?? 0)
+                    .limit(args.limit)
                     .lean()
                     .exec((error, doc) => {
                         if (error) {
@@ -64,6 +66,8 @@ const resolvers = {
         portfolioApplications: (parent, args, context, info) =>
             new Promise((resolve, reject) =>
                 PortfolioApplication.find({})
+                    .skip(args.skip ?? 0)
+                    .limit(args.limit)
                     .lean()
                     .exec((error, doc) => {
                         if (error) {
@@ -87,8 +91,12 @@ const resolvers = {
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
+const connectionString =`mongodb://${process.env.DBUSER}:${process.env.DBPASSWORD}@${process.env.DBURL}:${process.env.DBPORT}/${process.env.DBNAME}`
+
+console.log(connectionString)
+
 mongoose
-    .connect(`mongodb://${process.env.DBUSER}:${process.env.DBPASSWORD}@${process.env.DBURL}:${process.env.DBPORT}/${process.env.DBNAME}`)
+    .connect(connectionString)
     .then(() => {
         console.log('MongoDB connected succesfully')
 
