@@ -21,3 +21,6 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+#pm2 ecosystem config files
+ecosystem.config.js
