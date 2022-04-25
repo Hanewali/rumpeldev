@@ -26,6 +26,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache-dependency-path: graphql/package-lock.json
+      - name: Use graphql directory
+        run: cd graphql
       - name: Install dependencies
         run: npm i
       - name: Build for production
