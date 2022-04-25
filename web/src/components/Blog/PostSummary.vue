@@ -30,7 +30,6 @@ img {
 
 .blogpost {
   width: 60vw;
-  margin-right: auto;
-  margin-left: auto;
+  margin: 1rem auto;
 }
 </style>

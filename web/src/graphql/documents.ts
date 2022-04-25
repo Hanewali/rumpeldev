@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 
-export const POSTS = gql`query posts($query: String!, $limit: Int!) {
-    posts(query: $query, type: Post, first: $limit) {
+export const POSTS = gql`query posts($first: Int  , $limit: Int!) {
+    posts(first: $first, limit: $limit) {
       _id
       title
       contentSummary

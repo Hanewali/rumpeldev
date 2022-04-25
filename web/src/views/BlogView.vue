@@ -1,29 +1,53 @@
 <template>
-  <div class="blog">
-    <BlogPostComponent v-for="post in blogposts" :key="post.id" :title="post.title" :content-summary="post.shortContent" :image-url="post.imageUrl"/>
+  <div class="blog" v-if="this.posts">
+    <post-summary v-for="post in this.posts" :key="post._id" :title="post.title"
+                  :content-summary="post.contentSummary" :image-url="post.imageUrl"/>
+    <!--    <BlogPostComponent v-for="post in this.posts" :key="post._id" :title="post.title"-->
+    <!--                       :content-summary="post.contentSummary"-->
+    <!--                       :image-url="post.imageUrl"/>-->
   </div>
 </template>
 
-<script setup lang="ts">
-import { computed } from 'vue'
-import BlogPostComponent from '@/components/Blog/BlogPost.vue'
-import { useQuery, useResult } from '@vue/apollo-composable'
+<script lang="ts">
+import { defineComponent, watch } from 'vue'
+import { useQuery } from '@vue/apollo-composable'
 import { POSTS } from '@/graphql/documents'
+import { usePostsStore } from '@/stores/posts'
+import { BlogPost } from '@/interfaces/Blogpost'
+import PostSummary from '@/components/Blog/PostSummary.vue'
 
-interface BlogPost {
-  _id: string,
-  title: string,
-  contentSummary: string,
-  imageUrl: string,
-  content: string,
-  authorName: string
-}
+export default defineComponent({
+  components: { PostSummary },
+  setup () {
+    const postsStore = usePostsStore()
 
-const { result, loading, error } = useQuery<{
-  search: BlogPost
-}>(POSTS)
+    return { postsStore }
+  },
+  data () {
+    return {
+      posts: Array<BlogPost>()
+    }
+  },
+  methods: {
+    blogposts () {
+      const { result } = useQuery(POSTS, { first: 0, limit: 10 })
 
-const blogposts = result
+      if (this.postsStore.posts.length > 0) {
+        this.posts = this.postsStore.posts
+        return
+      }
+
+      watch(result, value => {
+        this.postsStore.posts = value.posts as Array<BlogPost>
+        this.posts = value.posts as Array<BlogPost>
+      })
+    }
+  },
+  mounted () {
+    this.blogposts()
+  }
+})
+
 </script>
 
 <style scoped lang="scss">
