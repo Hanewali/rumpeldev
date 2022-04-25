@@ -26,6 +26,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+          cache-dependency-path: graphql/package-lock.json
       - name: Install dependencies
         run: npm ci
       - name: Build for production
@@ -33,7 +34,7 @@ jobs:
       - name: Action - rsync API
         uses: up9cloud/action-rsync@v1.3
         env:
-          SOURCE: ./
+          SOURCE: ./graphql
           HOST: ${{ secrets.REMOTE_HOST }}
           USER: ${{ secrets.REMOTE_USER }}
           KEY: ${{ secrets.DEPLOY_KEY }}
